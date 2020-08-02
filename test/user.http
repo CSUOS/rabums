@@ -1,0 +1,19 @@
+POST http://127.0.0.1:8080/v1/get
+Content-Type: application/json
+
+{
+  "Token": "WORLD",
+  "UserID": "HELLO",
+  "UserPW": ":-)"
+}
+
+###
+PUT http://127.0.0.1:8080/v1/client
+Content-Type: application/json
+
+{
+  "masterkey": "5519c9e12c18fb4c6b8ae3e258eafcdfc88120354cc823f956b6cc8b53eab08a",
+  "clientId": "test",
+  "clientPw": "test2",
+  "link": "https://iwanhae.ga"
+}

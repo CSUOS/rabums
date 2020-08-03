@@ -3,7 +3,7 @@ package v1
 import (
 	"net/http"
 
-	"github.com/LEE-WAN/RABUMS/cmd/database"
+	"github.com/CSUOS/rabums/cmd/database"
 	"github.com/gin-gonic/gin"
 )
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/LEE-WAN/RABUMS/cmd/database"
+	"github.com/CSUOS/rabums/cmd/database"
 	"github.com/gin-gonic/gin"
 )
 

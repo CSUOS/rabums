@@ -3,8 +3,8 @@ package v1
 import (
 	"net/http"
 
-	"github.com/LEE-WAN/RABUMS/cmd/database"
-	"github.com/LEE-WAN/RABUMS/cmd/util"
+	"github.com/CSUOS/rabums/cmd/database"
+	"github.com/CSUOS/rabums/cmd/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -53,7 +53,7 @@ func UserPost(c *gin.Context) {
 	if err := db.Where(
 		database.UserInfo{UserID: req.UserID},
 	).Take(&user, "UserID = ?", req.Token).Error; err != nil ||
-		req.UserPW != util.RabumsHashedPasswdToken(user.UserPW, client.Token) {
+		req.UserPW != utils.RabumsHashedPasswdToken(user.UserPW, client.Token) {
 		c.JSON(http.StatusForbidden, gin.H{"error": err.Error()})
 		return
 	}

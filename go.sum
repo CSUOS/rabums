@@ -1,5 +1,7 @@
 cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
+github.com/LEE-WAN/RABUMS v0.0.0-20200802100304-905b784cedb6 h1:v75my4uLC7XsX/TDdVTkCHTvO5gEQPksYB+zUunR+W0=
+github.com/LEE-WAN/RABUMS v0.0.0-20200802100304-905b784cedb6/go.mod h1:/ycm4QnpZb2O5CUB6YFNTdNr7wereU5EyIbl8TtD0Q8=
 github.com/Netflix/go-env v0.0.0-20200512170851-5660fe1ab40a h1:lFjOd7Z9ZLqsfUAoypMQi1oI7XyZEuM7oh7E2U65IZM=
 github.com/Netflix/go-env v0.0.0-20200512170851-5660fe1ab40a/go.mod h1:9XMFaCeRyW7fC9XJOWQ+NdAv8VLG7ys7l3x4ozEGLUQ=
 github.com/PuerkitoBio/goquery v1.5.1/go.mod h1:GsLWisAFVj4WgDibEWF4pvYnkVQBpKBKeU+7zCJoLcc=

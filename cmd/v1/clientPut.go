@@ -3,8 +3,8 @@ package v1
 import (
 	"net/http"
 
-	"github.com/LEE-WAN/RABUMS/cmd/database"
-	"github.com/LEE-WAN/RABUMS/cmd/util"
+	"github.com/CSUOS/rabums/cmd/database"
+	"github.com/CSUOS/rabums/cmd/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -39,7 +39,7 @@ func ClientPut(c *gin.Context) {
 	db := database.Connect()
 	defer db.Close()
 
-	if isValid := util.CheckIsMasterkey(req.MasterKey); isValid != true {
+	if isValid := utils.CheckIsMasterkey(req.MasterKey); isValid != true {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Not a valid master key"})
 		return
 	}
@@ -55,7 +55,7 @@ func ClientPut(c *gin.Context) {
 	client.ClientID = req.ClientID
 	client.ClientPW = req.ClientPW
 	client.Link = req.Link
-	client.Token = util.GenerateNewToken()
+	client.Token = utils.GenerateNewToken()
 	client.Valid = req.Valid
 	if isUpdate {
 		db.Save(&client)

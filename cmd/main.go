@@ -3,15 +3,15 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/LEE-WAN/RABUMS/cmd/database"
-	"github.com/LEE-WAN/RABUMS/cmd/util"
-	v1 "github.com/LEE-WAN/RABUMS/cmd/v1"
+	"github.com/CSUOS/rabums/cmd/database"
+	utils "github.com/CSUOS/rabums/cmd/utils"
+	v1 "github.com/CSUOS/rabums/cmd/v1"
 )
 
 func main() {
-	LoadSettings()
+	utils.LoadSettings()
 	database.DBInit()
-	util.GenerateSecret()
+	utils.GenerateSecret()
 
 	router := gin.Default()
 

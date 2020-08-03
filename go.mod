@@ -1,8 +1,9 @@
-module github.com/LEE-WAN/RABUMS
+module github.com/CSUOS/rabums
 
 go 1.14
 
 require (
+	github.com/LEE-WAN/RABUMS v0.0.0-20200802100304-905b784cedb6
 	github.com/Netflix/go-env v0.0.0-20200512170851-5660fe1ab40a
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-playground/validator/v10 v10.3.0 // indirect

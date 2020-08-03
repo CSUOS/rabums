@@ -1,31 +1,31 @@
 package v1
 
 import (
-	"fmt"
 	"net/http"
-	"time"
-
-	"github.com/LEE-WAN/RABUMS/cmd/util"
 
 	"github.com/LEE-WAN/RABUMS/cmd/database"
+	"github.com/LEE-WAN/RABUMS/cmd/util"
 	"github.com/gin-gonic/gin"
 )
 
-//UserGet Healthcheck용 API
-//절대로 프로그램적으로 사용하지 말것
-func UserGet(c *gin.Context) {
-	start := time.Now()
-	db := database.Connect()
-	defer db.Close()
-	c.JSON(200, gin.H{
-		"msg":   "Connect to db successfully! :-D",
-		"takes": fmt.Sprintf("%dms", time.Since(start).Milliseconds()),
-	})
+//RequestUserInfo /v1/user로 들어오는 POST 요청
+type RequestUserInfo struct {
+	Token  string `json:"token" binding:"required"`
+	UserID string `json:"userId" binding:"required"`
+	UserPW string `json:"userPw" binding:"required"`
+}
+
+//ResponseUserInfo /v1/get으로 들어온 요청에 대한 응답
+type ResponseUserInfo struct {
+	ID         int    `json:"_id"`
+	UserID     string `json:"userId"`
+	UserName   string `json:"userName"`
+	UserNumber int    `json:"userNumber"`
 }
 
 //UserPost 유저 정보를 불러오는 API
-//userId, userPw, token 으로 사용자 정보를 받아옴.
-//_id, userId, userName, userNumber 를 반환함.
+//->RequestUserInfo
+//<-ResponseUserInfo
 //400, 401, 403, 500 에러 발생가능
 func UserPost(c *gin.Context) {
 	var req RequestUserInfo

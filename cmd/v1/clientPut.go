@@ -9,9 +9,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//RequestClientUpdate /v1/client PUT으로 들어오는 요청
+type RequestClientUpdate struct {
+	MasterKey string `json:"masterkey" binding:"required"`
+	ClientID  string `json:"clientId" binding:"required"`
+	ClientPW  string `json:"clientPw" binding:"required"`
+	Link      string `json:"link" binding:"required"`
+	Valid     bool   `json:"valid"`
+}
+
+//ResponseClientUpdate /v1/client PUT 요청에 대한 응답
+type ResponseClientUpdate struct {
+	Token string `json:"token"`
+}
+
 //ClientPut 클라이언트 생성 혹은 업데이트를 해주는 API
-//masterkey, clientId, clientPw, link, valid 를 요청으로 받음
-//token을 반환함
+//->RequestClientUpdate
+//<-ResponseClientUpdate
 //400, 401, 500 에러 발생가능
 func ClientPut(c *gin.Context) {
 	req := RequestClientUpdate{

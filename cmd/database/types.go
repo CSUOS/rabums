@@ -22,18 +22,6 @@ type ClientInfo struct {
 	UpdatedAt time.Time
 }
 
-//UserType 사용자 타입
-type UserType int8
-
-//사용자 종류
-const (
-	ADMINISTRATOR UserType = -1
-	STUDENT       UserType = iota
-	PROFESSOR
-	INSTRUCTOR
-	EXTERNAL
-)
-
 //UserInfo 사용자정보 DB schema
 type UserInfo struct {
 	ID         int    `gorm:"PRIMARY_KEY;unique_index;AUTO_INCREMENT"`
@@ -45,6 +33,28 @@ type UserInfo struct {
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }
+
+//Log 이벤트발생시 기록남기는 DB schema
+type Log struct {
+	ID        int64     `gorm:"AUTO_INCREMENT;PRIMARY_KEY"`
+	User      int       `gorm:"index:user"`
+	Client    int       `gorm:"index:client"`
+	Event     EventType `gorm:"index:event"`
+	Message   string
+	CreatedAt time.Time
+}
+
+//UserType 사용자 타입
+type UserType int8
+
+//사용자 종류
+const (
+	ADMINISTRATOR UserType = -1
+	STUDENT       UserType = iota
+	PROFESSOR
+	INSTRUCTOR
+	EXTERNAL
+)
 
 //EventType 발생가능한 이벤트 타입
 type EventType int
@@ -60,13 +70,3 @@ const (
 	LOGINFAIL EventType = 202
 	QUERYLOG  EventType = 300
 )
-
-//Log 이벤트발생시 기록남기는 DB schema
-type Log struct {
-	ID        int64     `gorm:"AUTO_INCREMENT;PRIMARY_KEY"`
-	User      int       `gorm:"index:user"`
-	Client    int       `gorm:"index:client"`
-	Event     EventType `gorm:"index:event"`
-	Message   string
-	CreatedAt time.Time
-}

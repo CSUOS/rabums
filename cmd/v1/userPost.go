@@ -20,7 +20,7 @@ type ResponseUserInfo struct {
 	ID         int    `json:"_id"`
 	UserID     string `json:"userId"`
 	UserName   string `json:"userName"`
-	UserNumber int    `json:"userNumber"`
+	UserNumber int32  `json:"userNumber"`
 }
 
 //UserPost 유저 정보를 불러오는 API
@@ -41,9 +41,11 @@ func UserPost(c *gin.Context) {
 
 	// 유효하지 않은 토큰이면 401 에러를 발생시킨다.
 	if err := db.Where(
-		database.ClientInfo{Token: req.Token},
-	).Take(&client).Error; err != nil ||
-		client.Valid != true {
+		database.ClientInfo{
+			Token: req.Token,
+			Valid: true,
+		},
+	).Take(&client).Error; err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
@@ -52,9 +54,13 @@ func UserPost(c *gin.Context) {
 	var user database.UserInfo
 	if err := db.Where(
 		database.UserInfo{UserID: req.UserID},
-	).Take(&user, "UserID = ?", req.Token).Error; err != nil ||
-		req.UserPW != utils.RabumsHashedPasswdToken(user.UserPW, client.Token) {
-		c.JSON(http.StatusForbidden, gin.H{"error": err.Error()})
+	).Take(&user).Error; err != nil {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Invalid Userinfo"})
+		return
+	}
+
+	if req.UserPW != utils.RabumsHashedPasswdToken(user.UserPW, client.Token) {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Invalid Userinfo"})
 		return
 	}
 

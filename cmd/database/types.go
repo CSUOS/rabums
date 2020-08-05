@@ -26,10 +26,11 @@ type ClientInfo struct {
 type UserInfo struct {
 	ID         int    `gorm:"PRIMARY_KEY;unique_index;AUTO_INCREMENT"`
 	UserName   string `gorm:"index:userName"`
-	UserNumber int    `gorm:"index:userNumber"`
+	UserNumber int32  `gorm:"index:userNumber"`
 	UserEmail  string
 	UserID     string `gorm:"unique_index"`
 	UserPW     string
+	Available  bool `gorm:"index:availableUser"`
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }

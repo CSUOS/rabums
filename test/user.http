@@ -17,3 +17,32 @@ Content-Type: application/json
   "clientPw": "test2",
   "link": "https://iwanhae.ga"
 }
+###
+POST http://127.0.0.1:8080/v1/user
+Content-Type: application/json
+
+{
+  "token": "dcd08e8f5ef7dbbc06364709a595ad7269e78f8524df674477624c671708093c",
+  "userId": "train96",
+  "userPw":"9ca41b1f252c46fc919500b83a9807a1f0ca7cc89be3323f653ee0814df7702a"
+}
+
+
+###
+PUT http://127.0.0.1:8080/v1/user/request/token
+Content-Type: application/json
+
+{
+  "userName": "이완해",
+  "userNumber": 2016920036,
+  "userEmail": "train96@uos.ac.kr",
+  "userId": "train96",
+  "userPw": "test2"
+}
+###
+PUT http://127.0.0.1:8080/v1/user/request/register
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpZXJzX2F0IjoiMjAyMC0wOC0wNVQxMzoxOToyMFoiLCJ1c2VyRW1haWwiOiJ0cmFpbjk2QHVvcy5hYy5rciIsInVzZXJJZCI6InRyYWluOTYiLCJ1c2VyTnVtYmVyIjoyMDE2OTIwMDM2fQ.wWPHWdFLoe8Simf3UzQl6HYEcWaxvTEVU8DIeb24XtY"
+}

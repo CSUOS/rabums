@@ -1,14 +1,16 @@
 package database
 
 import (
+	"github.com/CSUOS/rabums/cmd/utils"
 	"github.com/jinzhu/gorm"
+
 	// mysql 플러그인
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 //Connect DB랑 연결함
 func Connect() *gorm.DB {
-	db, err := gorm.Open("mysql", "rabums:mhmvAfBPWcF4NX1y@(doctor.iptime.org)/rabums?charset=utf8mb4&parseTime=True")
+	db, err := gorm.Open("mysql", utils.Config.MYSQLUri)
 	if err != nil {
 		panic(err)
 	}

@@ -8,6 +8,11 @@
             회원정보수정
           </el-button>
         </nuxt-link>
+        <nuxt-link to="/edit" style="margin: 0 10px;">
+          <el-button class="main_button" type="info" plain>
+            보안 관리
+          </el-button>
+        </nuxt-link>
         <nuxt-link to="/register" style="margin: 0 10px;">
           <el-button class="main_button" type="success" plain>
             회원가입

@@ -7,44 +7,74 @@
         </h2>
       </div>
       <div class="line">
-        <el-radio v-model="type" label="1" border>학생</el-radio>
-        <el-radio v-model="type" label="2" border>교수/강사</el-radio>
+        <el-radio v-model="type" :label="1" border>학생</el-radio>
+        <el-radio v-model="type" :label="2" border>교수/강사</el-radio>
       </div>
       <div class="line">
         <div class="title">
           <p style="margin: 10px auto;">이름 :</p>
         </div>
-        <el-input placeholder="Please input" v-model="input"></el-input>
+        <el-input
+          v-model="user.userName"
+          maxlength="15"
+          show-word-limit
+        ></el-input>
       </div>
       <div class="line">
         <div class="title">
           <p style="margin: 10px auto;">학번 :</p>
         </div>
-        <el-input placeholder="Please input" v-model="input"></el-input>
+        <el-input
+          v-model="user.userNumber"
+          maxlength="10"
+          show-word-limit
+          :disabled="type === 2"
+        >
+        </el-input>
+      </div>
+      <div class="line">
+        <el-tag v-if="user.userNumber * 1 < 2000000000" type="danger"
+          >적절한 학번이 아님</el-tag
+        >
+        <el-tag v-else type="success">:-)</el-tag>
       </div>
       <div class="line">
         <div class="title">
           <p style="margin: 10px auto;">아이디 :</p>
         </div>
-        <el-input placeholder="Please input" v-model="input"></el-input>
+        <el-input
+          v-model="user.userId"
+          maxlength="15"
+          show-word-limit
+        ></el-input>
       </div>
       <div class="line">
         <div class="title">
           <p style="margin: 10px auto;">비밀번호 :</p>
         </div>
-        <el-input placeholder="Please input" v-model="input"></el-input>
+        <el-input v-model="user.userPw" show-password></el-input>
       </div>
       <div class="line">
         <div class="title">
           <p style="margin: 10px auto;">비밀번호 확인 :</p>
         </div>
-        <el-input placeholder="Please input" v-model="input"></el-input>
+        <el-input v-model="user.userPwCheck" show-password></el-input>
+      </div>
+      <div class="line">
+        <el-tag v-if="!equalPassword" type="danger">비밀번호 불일치</el-tag>
+        <el-tag v-else type="success">비밀번호 일치</el-tag>
+        <el-tag v-if="user.userPw.length < 6" type="warning">
+          너무 짧음
+        </el-tag>
+        <el-tag v-else type="success">적당함</el-tag>
       </div>
       <div class="line">
         <div class="title">
           <p style="margin: 10px auto;">이메일주소 :</p>
         </div>
-        <el-input placeholder="Please input" v-model="input"></el-input>
+        <el-input v-model="user.userEmail" maxlength="30">
+          <template slot="append">@uos.ac.kr</template>
+        </el-input>
       </div>
       <div class="line">
         <nuxt-link to="/" style="margin: 0 10px;">
@@ -64,8 +94,31 @@
 export default {
   data() {
     return {
-      type: 0,
+      type: 1,
+      user: {
+        userName: '',
+        userNumber: '',
+        userId: '',
+        userPw: '',
+        userPwCheck: '',
+        userEmail: '',
+      },
     }
+  },
+  computed: {
+    equalPassword() {
+      console.log(this.user)
+      return this.user.userPw === this.user.userPwCheck
+    },
+  },
+  watch: {
+    type(e) {
+      if (e === 2) {
+        this.user.userNumber = '0'
+      } else {
+        this.user.userNumber = ''
+      }
+    },
   },
 }
 </script>
@@ -76,6 +129,12 @@ export default {
   font-size: 16px !important;
   min-width: 160px;
 }
+@media screen and (max-width: 500px) {
+  .line {
+    display: block !important;
+  }
+}
+
 .line {
   margin: auto;
   display: flex;
@@ -89,7 +148,7 @@ export default {
 .register_container {
   margin: auto;
   min-height: 640px;
-  height: 80%;
+  min-height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -101,5 +160,8 @@ export default {
   width: 80%;
   max-width: 1024px;
   min-width: 360px;
+}
+.el-input {
+  width: 250px;
 }
 </style>

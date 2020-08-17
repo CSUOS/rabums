@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 
 	"github.com/CSUOS/rabums/cmd/database"
@@ -20,7 +21,9 @@ func main() {
 
 	router := gin.Default()
 
-	version1 := router.Group("/v1")
+	router.Use(static.Serve("/", static.LocalFile("../dist", true)))
+
+	version1 := router.Group("api/v1")
 	{
 		version1.GET("/user", v1.UserGet)
 		version1.POST("/user", v1.UserPost)
@@ -29,6 +32,7 @@ func main() {
 
 		version1.PUT("/client", v1.ClientPut)
 	}
+
 
 	router.Run(":8080")
 }

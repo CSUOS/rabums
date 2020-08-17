@@ -22,6 +22,13 @@ import (
 type RequestUserCreate struct {
 	Token string `json:"token" binding:"required"`
 }
+//ResponseUserCreate 유저생성완료 응답
+type ResponseUserCreate struct {
+	UserName string `json:"userName" binding:"required"`
+	UserNumber int32  `json:"userNumber" binding:"required"`
+	UserEmail  string `json:"userEmail" binding:"required"`
+	UserID     string `json:"userId" binding:"required"`	
+}
 
 //RequestUserToken /v1/user/request/token PUT 요청
 type RequestUserToken struct {
@@ -32,11 +39,11 @@ type RequestUserToken struct {
 	UserID     string `json:"userId" binding:"required"`
 	UserPW     string `json:"userPw" binding:"required"`
 }
-
-//ResponseUserPut PUT 요청 응답
-type ResponseUserPut struct {
+//ResponseUserToken PUT 요청 응답
+type ResponseUserToken struct {
 	Ok bool `json:"ok" binding:"required"`
 }
+
 
 //UserReqTokenPut /v1/user/request/token PUT 요청
 //->RequestUserToken
@@ -109,7 +116,7 @@ func UserReqTokenPut(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, ResponseUserPut{
+	c.JSON(http.StatusOK, ResponseUserToken{
 		Ok: true,
 	})
 	return
@@ -167,5 +174,16 @@ func UserReqRegisterPut(c *gin.Context) {
 		panic(err)
 	}
 
-	c.JSON(http.StatusOK, ResponseUserPut{Ok: true})
+	database.RecordLog(user.ID, 0, database.CREATED, database.Message{
+		"userId": user.UserID,
+		"userNumber": user.UserNumber,
+		"userEmail": user.UserEmail,
+	})
+
+	c.JSON(http.StatusOK, ResponseUserCreate{
+		UserEmail: user.UserEmail,
+		UserID: user.UserID,
+		UserName: user.UserName,
+		UserNumber: user.UserNumber,
+	})
 }

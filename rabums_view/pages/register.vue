@@ -33,7 +33,7 @@
         </el-input>
       </div>
       <div class="line">
-        <el-tag v-if="user.userNumber * 1 < 2000000000" type="danger"
+        <el-tag v-if="!validation.validUserNumber" type="danger"
           >적절한 학번이 아님</el-tag
         >
         <el-tag v-else type="success">:-)</el-tag>
@@ -61,9 +61,11 @@
         <el-input v-model="user.userPwCheck" show-password></el-input>
       </div>
       <div class="line">
-        <el-tag v-if="!equalPassword" type="danger">비밀번호 불일치</el-tag>
+        <el-tag v-if="!validation.equalPassword" type="danger"
+          >비밀번호 불일치</el-tag
+        >
         <el-tag v-else type="success">비밀번호 일치</el-tag>
-        <el-tag v-if="user.userPw.length < 6" type="warning">
+        <el-tag v-if="!validation.validPasswordLength" type="warning">
           너무 짧음
         </el-tag>
         <el-tag v-else type="success">적당함</el-tag>
@@ -82,7 +84,14 @@
             취소
           </el-button>
         </nuxt-link>
-        <el-button style="margin: 0 10px;" type="primary" plain>
+        <el-button
+          v-loading.fullscreen.lock="onLoading"
+          style="margin: 0 10px;"
+          type="primary"
+          plain
+          :disabled="!validation.consulusion"
+          @click="submit"
+        >
           제출
         </el-button>
       </div>
@@ -91,6 +100,12 @@
 </template>
 
 <script>
+const shajs = require('sha.js')
+
+const RabumsHASH = (text) => {
+  text = Buffer.from(text).toString('base64')
+  return shajs('sha256').update(text).digest('hex')
+}
 export default {
   data() {
     return {
@@ -103,21 +118,65 @@ export default {
         userPwCheck: '',
         userEmail: '',
       },
+      onLoading: false,
     }
   },
   computed: {
-    equalPassword() {
-      console.log(this.user)
-      return this.user.userPw === this.user.userPwCheck
+    validation() {
+      const output = {
+        noneEmpty:
+          this.user.userName.length !== 0 &&
+          this.user.userNumber.length !== 0 &&
+          this.user.userId.length !== 0 &&
+          this.user.userPw.length !== 0 &&
+          this.user.userEmail.length !== 0,
+        equalPassword: this.user.userPw === this.user.userPwCheck,
+        validPasswordLength: this.user.userPw.length > 6,
+        validUserNumber:
+          this.type === 1 ? this.user.userNumber * 1 > 2000000000 : true,
+      }
+      let consulusion = true
+      Object.keys(output).forEach((k) => {
+        if (output[k] !== true) consulusion = false
+      })
+      output.consulusion = consulusion
+      return output
     },
   },
   watch: {
     type(e) {
       if (e === 2) {
-        this.user.userNumber = '0'
+        this.user.userNumber = '-1'
       } else {
         this.user.userNumber = ''
       }
+    },
+  },
+  mounted() {},
+  methods: {
+    async submit() {
+      if (this.onLoading === true) return
+      this.onLoading = true
+      try {
+        await this.$axios.put('/api/v1/user/request/token', {
+          userName: this.user.userName,
+          userNumber: this.user.userNumber * 1,
+          userEmail: this.user.userEmail + '@uos.ac.kr',
+          userId: this.user.userId,
+          userPw: RabumsHASH(RabumsHASH(this.user.userPw)),
+        })
+        this.onLoading = false
+        this.$message({
+          message: `${this.user.userEmail}@uos.ac.kr 을 확인해주세요! :-)`,
+          type: 'success',
+        })
+        this.$router.push('/token')
+      } catch (error) {
+        console.log(error)
+        console.log(error.response.data)
+        this.$message.error(JSON.stringify(error.response.data))
+      }
+      this.onLoading = false
     },
   },
 }

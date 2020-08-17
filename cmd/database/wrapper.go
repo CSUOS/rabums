@@ -133,10 +133,13 @@ func GetUserByEmail(userEmail string) (*UserInfo, error) {
 func GetUserByEmailNotAvailable(userEmail string) (*UserInfo, error) {
 	db := GetDB()
 	user := &UserInfo{}
-	if err := db.Where(
+	if err := db.Not(
+		UserInfo{
+			Available: true,
+		},
+	).Where(
 		UserInfo{
 			UserEmail: userEmail,
-			Available: false,
 		},
 	).Take(&user).Error; err != nil {
 		if gorm.IsRecordNotFoundError(err) {

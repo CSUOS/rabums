@@ -31,7 +31,7 @@ var Config Environment = Environment{
 func LoadSettings() {
 
 	client, err := vault.NewClient(&vault.Config{
-		Address: "https://vault.hcail.ml",
+		Address: "https://vault.iwanhae.ga",
 	})
 	if err != nil {
 		es, err := env.UnmarshalFromEnviron(&Config)

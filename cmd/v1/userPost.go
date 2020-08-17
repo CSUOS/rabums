@@ -37,30 +37,47 @@ func UserPost(c *gin.Context) {
 	db := database.Connect()
 	defer db.Close()
 
-	var client database.ClientInfo
-
 	// 유효하지 않은 토큰이면 401 에러를 발생시킨다.
-	if err := db.Where(
-		database.ClientInfo{
-			Token: req.Token,
-			Valid: true,
-		},
-	).Take(&client).Error; err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+	client, err := database.CheckClientToken(req.Token)
+	if err != nil {
+		switch err {
+		case database.ErrRequestNotFound:
+			c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+			database.RecordLog(0, 0, database.INVALIDTOKEN, database.Message{
+				"token":  req.Token,
+				"userId": req.UserID,
+				"userPw": req.UserPW,
+			})
+			break
+		default:
+			panic(err)
+		}
 		return
 	}
 
 	// 유효한 유저정보를 찾지못하면 403 에러를 발생시킨다.
-	var user database.UserInfo
-	if err := db.Where(
-		database.UserInfo{UserID: req.UserID},
-	).Take(&user).Error; err != nil {
-		c.JSON(http.StatusForbidden, gin.H{"error": "Invalid Userinfo"})
+	user, err := database.GetUserByUserID(req.UserID)
+	if err != nil {
+		switch err {
+		case database.ErrRequestNotFound:
+			c.JSON(http.StatusForbidden, gin.H{"error": "Invalid Userinfo"})
+			database.RecordLog(0, client.ID, database.USERNOTFOUND, database.Message{
+				"userId": req.UserID,
+				"userPw": req.UserPW,
+			})
+			break
+		default:
+			panic(err)
+		}
 		return
 	}
 
 	if req.UserPW != utils.RabumsHashedPasswdToken(user.UserPW, client.Token) {
 		c.JSON(http.StatusForbidden, gin.H{"error": "Invalid Userinfo"})
+		database.RecordLog(user.ID, client.ID, database.INCORRECTPASSWORD, database.Message{
+			"userId": req.UserID,
+			"userPw": req.UserPW,
+		})
 		return
 	}
 
@@ -71,4 +88,5 @@ func UserPost(c *gin.Context) {
 	res.UserName = user.UserName
 	res.UserNumber = user.UserNumber
 	c.JSON(http.StatusOK, res)
+	database.RecordLog(user.ID, client.ID, database.LOGIN, database.Message{})
 }

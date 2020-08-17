@@ -1,6 +1,8 @@
 package database
 
 import (
+	"time"
+
 	"github.com/CSUOS/rabums/cmd/utils"
 	"github.com/jinzhu/gorm"
 
@@ -8,22 +10,37 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-//Connect DB랑 연결함
+var db *gorm.DB
+
 func Connect() *gorm.DB {
-	db, err := gorm.Open("mysql", utils.Config.MYSQLUri)
-	if err != nil {
-		panic(err)
+	return nil
+}
+
+//GetDB DB인터페이스 소환!
+func GetDB() *gorm.DB {
+	if db == nil {
+		var err error
+		db, err = gorm.Open("mysql", utils.Config.MYSQLUri)
+		if err != nil {
+			panic(err)
+		}
+		db.DB().SetConnMaxLifetime(30 * time.Minute)
+		db.DB().SetMaxIdleConns(10)
+		db.DB().SetMaxOpenConns(100)
 	}
 	return db
-	// defer db.Close()
 }
 
 //DBInit 데이터베이스 초기화
 func DBInit() {
-	db := Connect()
-	defer db.Close()
+	GetDB()
 
 	db.AutoMigrate(&ClientInfo{})
 	db.AutoMigrate(&UserInfo{})
 	db.AutoMigrate(&Log{})
+}
+
+//Close DB 접속 끊기
+func Close() {
+	db.Close()
 }

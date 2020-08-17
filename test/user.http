@@ -12,9 +12,9 @@ PUT http://127.0.0.1:8080/v1/client
 Content-Type: application/json
 
 {
-  "masterkey": "5519c9e12c18fb4c6b8ae3e258eafcdfc88120354cc823f956b6cc8b53eab08a",
+  "masterkey": "7fcf88e34134321169dd526512717b9b1a3adc3a3534399fda988eefc85e84a9",
   "clientId": "test",
-  "clientPw": "test2",
+  "clientPw": "SOMETHING ELSE",
   "link": "https://iwanhae.ga"
 }
 ###
@@ -34,7 +34,7 @@ Content-Type: application/json
 
 {
   "userName": "이완해",
-  "userNumber": 2016920036,
+  "userNumber": -1,
   "userEmail": "train96@uos.ac.kr",
   "userId": "train96",
   "userPw": "test2"
@@ -44,5 +44,5 @@ PUT http://127.0.0.1:8080/v1/user/request/register
 Content-Type: application/json
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpZXJzX2F0IjoiMjAyMC0wOC0wNVQxMzoxOToyMFoiLCJ1c2VyRW1haWwiOiJ0cmFpbjk2QHVvcy5hYy5rciIsInVzZXJJZCI6InRyYWluOTYiLCJ1c2VyTnVtYmVyIjoyMDE2OTIwMDM2fQ.wWPHWdFLoe8Simf3UzQl6HYEcWaxvTEVU8DIeb24XtY"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpZXJzX2F0IjoiMjAyMC0wOC0xN1QxNToxMzo0MSswOTowMCIsInVzZXJFbWFpbCI6InRyYWluOTZAdW9zLmFjLmtyIiwidXNlcklkIjoidHJhaW45NiIsInVzZXJOdW1iZXIiOjB9.97qmXFN9BP-mH_DalKA7m_aKSfMrb2TZNgGKlZP5x-g"
 }

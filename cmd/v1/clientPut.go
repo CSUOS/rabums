@@ -36,35 +36,34 @@ func ClientPut(c *gin.Context) {
 		return
 	}
 
-	db := database.Connect()
-	defer db.Close()
-
 	if isValid := utils.CheckIsMasterkey(req.MasterKey); isValid != true {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Not a valid master key"})
+		database.RecordLog(0, 0, database.INVALIDMASTERKEY, database.Message{
+			"masterKey": req.MasterKey,
+			"clientId":  req.ClientID,
+			"clientPw":  req.ClientPW,
+		})
 		return
 	}
 
-	var client database.ClientInfo
-	isUpdate := true
-	if err := db.Where(
-		database.ClientInfo{ClientID: req.ClientID},
-	).Take(&client).Error; err != nil {
-		// 새로 생성하는 케이스
-		isUpdate = false
+	client, err := database.GetClientInfo(req.ClientID)
+	if err != nil {
+		panic(err)
 	}
+
 	client.ClientID = req.ClientID
 	client.ClientPW = req.ClientPW
 	client.Link = req.Link
 	client.Token = utils.GenerateNewToken()
 	client.Valid = req.Valid
-	if isUpdate {
-		db.Save(&client)
-	} else {
-		db.Create(&client)
-	}
+
+	err = database.UpdateClientInfo(client)
+
 	res := ResponseClientUpdate{
 		Token: client.Token,
 	}
 	c.JSON(http.StatusOK, res)
-
+	database.RecordLog(0, client.ID, database.UPDATED, database.Message{
+		"clientId": client.ClientID,
+	})
 }

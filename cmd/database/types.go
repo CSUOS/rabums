@@ -62,12 +62,16 @@ type EventType int
 
 //사용자 종류
 const (
-	UNKOWN    EventType = -1
-	CREATED   EventType = 100
-	UPDATED   EventType = 101
-	DELETED   EventType = 102
-	LOGIN     EventType = 200
-	LOGOUT    EventType = 201
-	LOGINFAIL EventType = 202
-	QUERYLOG  EventType = 300
+	UNKOWN   EventType = -1
+	ACCESSED EventType = 100
+	CREATED  EventType = 101
+	UPDATED  EventType = 102
+	DELETED  EventType = 103
+	LOGIN    EventType = 200
+	LOGOUT   EventType = 201
+
+	INVALIDMASTERKEY  EventType = 401
+	INVALIDTOKEN      EventType = 402
+	USERNOTFOUND      EventType = 403
+	INCORRECTPASSWORD EventType = 404
 )

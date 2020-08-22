@@ -12,8 +12,10 @@ import (
 
 var db *gorm.DB
 
-func Connect() *gorm.DB {
-	return nil
+//Ping 접속 가능여부 확인용
+func Ping() error {
+	_, err := gorm.Open("mysql", utils.Config.MYSQLUri)
+	return err
 }
 
 //GetDB DB인터페이스 소환!

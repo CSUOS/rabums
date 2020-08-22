@@ -8,23 +8,23 @@ Content-Type: application/json
 }
 
 ###
-PUT http://127.0.0.1:8080/v1/client
+PUT http://127.0.0.1:8080/api/v1/client
 Content-Type: application/json
 
 {
-  "masterkey": "7fcf88e34134321169dd526512717b9b1a3adc3a3534399fda988eefc85e84a9",
+  "masterkey": "b7a9324789b57e426ac3403a5d816f8c65d94240b580948a2a8eed44c7dfc8dc",
   "clientId": "test",
   "clientPw": "SOMETHING ELSE",
   "link": "https://iwanhae.ga"
 }
 ###
-POST http://127.0.0.1:8080/v1/user
+POST http://127.0.0.1:8080/api/v1/user
 Content-Type: application/json
 
 {
   "token": "dcd08e8f5ef7dbbc06364709a595ad7269e78f8524df674477624c671708093c",
   "userId": "train96",
-  "userPw":"9ca41b1f252c46fc919500b83a9807a1f0ca7cc89be3323f653ee0814df7702a"
+  "userPw":"960ba2cd3d1b0dff855351028812d17d2787adaa3b2d0ee527b2b633c7d15afc"
 }
 
 

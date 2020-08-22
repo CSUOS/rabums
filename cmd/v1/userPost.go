@@ -34,8 +34,6 @@ func UserPost(c *gin.Context) {
 		return
 	}
 
-	db := database.Connect()
-	defer db.Close()
 
 	// 유효하지 않은 토큰이면 401 에러를 발생시킨다.
 	client, err := database.CheckClientToken(req.Token)

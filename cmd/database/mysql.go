@@ -14,7 +14,8 @@ var db *gorm.DB
 
 //Ping 접속 가능여부 확인용
 func Ping() error {
-	_, err := gorm.Open("mysql", utils.Config.MYSQLUri)
+	db, err := gorm.Open("mysql", utils.Config.MYSQLUri)
+	db.Close()
 	return err
 }
 

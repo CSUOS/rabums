@@ -12,14 +12,15 @@ import "time"
 
 //ClientInfo 클라이언트정보 DB schema
 type ClientInfo struct {
-	ID        int    `gorm:"PRIMARY_KEY;unique_index;AUTO_INCREMENT"`
-	ClientID  string `gorm:"PRIMARY_KEY;unique_index"`
-	ClientPW  string `gorm:"size:255"`
-	Link      string `gorm:"size:255"`
-	Token     string `gorm:"size:255"`
-	Valid     bool
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ID          int       `gorm:"PRIMARY_KEY;unique_index;AUTO_INCREMENT" json:"id"`
+	ClientID    string    `gorm:"PRIMARY_KEY;unique_index" json:"clientId"`
+	ClientPW    string    `gorm:"size:255" json:"clientPw"`
+	Link        string    `gorm:"size:255" json:"link"`
+	Token       string    `gorm:"size:255" json:"token"`
+	Description string    `gorm:"size:4096" json:"description"`
+	Valid       bool      `json:"valid"`
+	CreatedAt   time.Time `json:"createdAt"`
+	UpdatedAt   time.Time `json:"updatedAt"`
 }
 
 //UserInfo 사용자정보 DB schema

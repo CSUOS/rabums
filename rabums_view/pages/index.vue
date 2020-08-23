@@ -1,15 +1,23 @@
 <template>
   <div class="container">
     <div>
-      <img src="/logo.png" style="width: 80%; max-width: 1024px;" />
+      <div>
+        <img src="/icon.png" style="width: 80%; max-width: 1024px;" />
+        <h1 style="font-size: xxx-large;">
+          CSUOS | Rabums
+        </h1>
+        <h3>
+          Rest API Based User Management System
+        </h3>
+      </div>
       <div class="links">
-        <nuxt-link to="/edit" style="margin: 0 10px;">
-          <el-button class="main_button" type="primary" plain>
-            회원정보수정
+        <nuxt-link to="/applist" style="margin: 0 10px;">
+          <el-button class="main_button" type="info" plain>
+            APP 관리
           </el-button>
         </nuxt-link>
-        <nuxt-link to="/edit" style="margin: 0 10px;">
-          <el-button class="main_button" type="info" plain>
+        <nuxt-link to="/privacy" style="margin: 0 10px;">
+          <el-button class="main_button" type="primary" plain>
             보안 관리
           </el-button>
         </nuxt-link>
@@ -24,10 +32,24 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {}
+  },
+}
 </script>
 
 <style>
+@font-face {
+  font-family: 'IBMPlexSansKR-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff')
+    format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  font-family: IBMPlexSansKR-Regular;
+}
 a {
   color: black;
   text-decoration: none;

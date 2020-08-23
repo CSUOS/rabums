@@ -172,8 +172,6 @@ export default {
         })
         this.$router.push('/token')
       } catch (error) {
-        console.log(error)
-        console.log(error.response.data)
         this.$message.error(JSON.stringify(error.response.data))
       }
       this.onLoading = false

@@ -23,6 +23,17 @@ func RecordLog(user int, client int, event EventType, msg Message) error {
 	return nil
 }
 
+//GetClientList Client 리스트들을 전부 가져옴
+func GetClientList(from int) ([]*ClientInfo, error) {
+	db := GetDB()
+	clients := []*ClientInfo{}
+	err := db.Order("id").Offset(from).Limit(10).Find(&clients).Error
+	if err != nil {
+		return nil, ErrDatabaseUnavailable
+	}
+	return clients, nil
+}
+
 //GetClientInfo client 정보 가져옴
 func GetClientInfo(clientID string) (*ClientInfo, error) {
 	result := &ClientInfo{}

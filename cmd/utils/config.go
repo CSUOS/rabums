@@ -11,10 +11,16 @@ import (
 // "" -> default value
 type Environment struct {
 	// "dev" or pord
-	Mode         string `env:"MODE"`
+	Mode string `env:"MODE"`
+
+	VaultToken   string `env:"VAULT_TOKEN"`
+	VaultAddress string `env:"VAULT_ADDRESS"`
+	VaultPath    string `env:"VAULT_PATH"`
+
 	SMTPAddress  string `env:"SMTP_ADRESS" json:"smtp_address"`
 	SMTPPassword string `env:"SMTP_PASSWORD" json:"smtp_password"`
 	MYSQLUri     string `env:"MYSQL_URI" json:"mysql_uri"`
+
 	// 기타등등
 	Extras env.EnvSet
 }
@@ -25,25 +31,28 @@ var Config Environment = Environment{
 	SMTPAddress:  "",
 	SMTPPassword: "",
 	MYSQLUri:     "",
+	VaultToken:   "",
+	VaultAddress: "https://vault.iwanhae.ga",
+	VaultPath:    "/csuos/rabums",
 }
 
 //LoadSettings 환경변수 로드하는 함수
 func LoadSettings() {
+	es, err := env.UnmarshalFromEnviron(&Config)
+	if err != nil {
+		log.Fatal(err)
+	}
+	Config.Extras = es
 
 	client, err := vault.NewClient(&vault.Config{
-		Address: "https://vault.iwanhae.ga",
+		Address: Config.VaultAddress,
 	})
 	if err != nil {
-		es, err := env.UnmarshalFromEnviron(&Config)
-		if err != nil {
-			log.Fatal(err)
-		}
-		Config.Extras = es
 		return
 	}
 
 	c := client.Logical()
-	secret, err := c.Read("/csuos/rabums")
+	secret, err := c.Read(Config.VaultPath)
 	Config.SMTPAddress = secret.Data["smtp_address"].(string)
 	Config.SMTPPassword = secret.Data["smtp_password"].(string)
 	Config.MYSQLUri = secret.Data["mysql_uri"].(string)

@@ -71,7 +71,7 @@ const (
 	LOGIN    EventType = 200
 	LOGOUT   EventType = 201
 
-	INVALIDMASTERKEY  EventType = 401
+	INVALIDCLIENTPW  EventType = 401
 	INVALIDTOKEN      EventType = 402
 	USERNOTFOUND      EventType = 403
 	INCORRECTPASSWORD EventType = 404

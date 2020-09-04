@@ -2,9 +2,7 @@
   <div class="background">
     <div class="register_container">
       <div class="line">
-        <h1>
-          RABUMS
-        </h1>
+        <h1>RABUMS</h1>
       </div>
       <div class="line">
         <h3>토큰</h3>
@@ -14,17 +12,15 @@
         :autosize="{ minRows: 2, maxRows: 6 }"
         placeholder="이메일로 받은 토큰을 입력해주세요"
         type="textarea"
-        style="width: 80%; max-width: 480px; margin: 0 auto;"
+        style="width: 80%; max-width: 480px; margin: 0 auto"
       ></el-input>
       <div class="line">
-        <nuxt-link to="/" style="margin: 0 10px;">
-          <el-button type="info" plain>
-            취소
-          </el-button>
+        <nuxt-link to="/" style="margin: 0 10px">
+          <el-button type="info" plain> 취소 </el-button>
         </nuxt-link>
         <el-button
           v-loading.fullscreen.lock="onLoading"
-          style="margin: 0 10px;"
+          style="margin: 0 10px"
           type="primary"
           plain
           :disabled="token.length == 0"

@@ -10,7 +10,9 @@
       "request": "launch",
       "mode": "auto",
       "program": "${workspaceFolder}/cmd/main.go",
-      "env": {},
+      "env": {
+        "VAULT_TOKEN": "s.3qvQ4nN7xPPcrHN77r0bCWbl"
+      },
       "args": []
     }
   ]

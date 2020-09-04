@@ -11,7 +11,6 @@ import (
 
 //RequestClientUpdate /v1/client PUT으로 들어오는 요청
 type RequestClientUpdate struct {
-	MasterKey   string `json:"masterkey"`
 	ClientID    string `json:"clientId" binding:"required"`
 	ClientPW    string `json:"clientPw" binding:"required"`
 	ChangedPw   string `json:"changedPw"`
@@ -44,27 +43,24 @@ func ClientPut(c *gin.Context) {
 	if err != nil {
 		panic(err)
 	}
-	validMasterKey := utils.CheckIsMasterkey(req.MasterKey)
-	isValid := validMasterKey ||
-		client.ClientPW == req.ClientPW ||
-		client.ClientPW == ""
-	if !isValid {
+	validMasterKey := utils.CheckIsMasterkey(req.ClientPW)
+	validClientKey := client.ClientPW == req.ClientPW
+	isNewClient := client.ClientPW == "" && req.ChangedPw != "" && req.ClientPW == "empty"
+
+	if !validClientKey && !validMasterKey && !isNewClient {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Not a valid key"})
-		database.RecordLog(0, 0, database.INVALIDMASTERKEY, database.Message{
-			"masterKey": req.MasterKey,
-			"clientId":  req.ClientID,
-			"clientPw":  req.ClientPW,
+		database.RecordLog(0, 0, database.INVALIDCLIENTPW, database.Message{
+			"clientId": req.ClientID,
+			"clientPw": req.ClientPW,
 		})
 		return
 	}
 	if !validMasterKey {
 		req.Valid = client.Valid
+		client.ClientPW = req.ClientPW
 	}
 
 	client.ClientID = req.ClientID
-	if req.MasterKey == "" {
-		client.ClientPW = req.ClientPW
-	}
 	if req.ChangedPw != "" {
 		client.ClientPW = req.ChangedPw
 	}

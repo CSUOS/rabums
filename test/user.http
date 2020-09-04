@@ -12,8 +12,9 @@ PUT http://127.0.0.1:8080/api/v1/client
 Content-Type: application/json
 
 {
-  "clientId": "rabums",
-  "clientPw": "SOMETHING ELSE",
+  "clientId": "test2",
+  "clientPw": "empty",
+  "changedPw": "SOMETHING ELSE",
   "link": "https://iwanhae.ga",
   "description": "2것은 실험용입니다.",
   "valid": true,
@@ -24,9 +25,12 @@ PUT http://127.0.0.1:8080/api/v1/client
 Content-Type: application/json
 
 {
-  "clientId": "rabums",
-  "originalPw": "SOMETHING ELSE",
-  "link": "https://iwanhae.ga/avas"
+  "clientId": "test2",
+  "clientPw": "243f53d8f68dac655d30fc630a49c93413f2a038270b7b5fceddff6f7cb2d103",
+  "link": "https://iwanhae.ga",
+  "description": "2것은 실험용입니다.",
+  "valid": true,
+  "renewToken": false
 }
 ###
 POST http://127.0.0.1:8080/api/v1/user

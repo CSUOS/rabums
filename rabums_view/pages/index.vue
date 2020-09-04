@@ -2,26 +2,22 @@
   <div class="container">
     <div>
       <div>
-        <img src="/icon.png" style="width: 80%; max-width: 1024px;" />
-        <h1 style="font-size: xxx-large;">
-          CSUOS | Rabums
-        </h1>
-        <h3>
-          Rest API Based User Management System
-        </h3>
+        <img src="/icon.png" style="width: 80%; max-width: 1024px" />
+        <h1 style="font-size: xxx-large">CSUOS | Rabums</h1>
+        <h3>Rest API Based User Management System</h3>
       </div>
       <div class="links">
-        <nuxt-link to="/applist" style="margin: 0 10px;">
+        <nuxt-link to="/applist" style="margin: 0 10px">
           <el-button class="main_button" type="info" plain>
             APP 관리
           </el-button>
         </nuxt-link>
-        <nuxt-link to="/privacy" style="margin: 0 10px;">
+        <nuxt-link to="/privacy" style="margin: 0 10px">
           <el-button class="main_button" type="primary" plain>
             보안 관리
           </el-button>
         </nuxt-link>
-        <nuxt-link to="/register" style="margin: 0 10px;">
+        <nuxt-link to="/register" style="margin: 0 10px">
           <el-button class="main_button" type="success" plain>
             회원가입
           </el-button>

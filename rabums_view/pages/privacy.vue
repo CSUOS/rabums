@@ -2,51 +2,49 @@
   <div class="background">
     <div class="container">
       <div class="line">
-        <h1>
-          RABUMS
-        </h1>
+        <h1>RABUMS</h1>
       </div>
       <div class="line">
         <h3>회원정보수정</h3>
       </div>
       <div class="line">
         <div class="title">
-          <p style="margin: 10px auto;">이름 :</p>
+          <p style="margin: 10px auto">이름 :</p>
         </div>
         <el-input placeholder="이완해" disabled></el-input>
       </div>
       <div class="line">
         <div class="title">
-          <p style="margin: 10px auto;">학번(사용자번호) :</p>
+          <p style="margin: 10px auto">학번(사용자번호) :</p>
         </div>
         <el-input placeholder="2016920036" disabled></el-input>
       </div>
       <div class="line">
         <div class="title">
-          <p style="margin: 10px auto;">이메일주소 :</p>
+          <p style="margin: 10px auto">이메일주소 :</p>
         </div>
         <el-input placeholder="train96@uos.ac.kr" disabled></el-input>
       </div>
       <div class="line">
         <div class="title">
-          <p style="margin: 10px auto;">아이디 :</p>
+          <p style="margin: 10px auto">아이디 :</p>
         </div>
         <el-input placeholder=""></el-input>
       </div>
       <div class="line">
         <div class="title">
-          <p style="margin: 10px auto;">비밀번호 :</p>
+          <p style="margin: 10px auto">비밀번호 :</p>
         </div>
         <el-input></el-input>
       </div>
       <div class="line">
         <div class="title">
-          <p style="margin: 10px auto;">비밀번호 확인 :</p>
+          <p style="margin: 10px auto">비밀번호 확인 :</p>
         </div>
         <el-input></el-input>
       </div>
       <div class="line">
-        <nuxt-link to="/" style="margin: 0 10px;">
+        <nuxt-link to="/" style="margin: 0 10px">
           <el-button>돌아가기</el-button>
         </nuxt-link>
         <el-button type="primary">적용</el-button>
@@ -55,44 +53,20 @@
       <div class="line">
         <h3>활동기록</h3>
       </div>
-      <div class="line" style="height: 200px; overflow-y: scroll; width: 100%;">
+      <div class="line" style="height: 200px; overflow-y: scroll; width: 100%">
         <el-timeline>
-          <el-timeline-item>
-            계정생성
-          </el-timeline-item>
-          <el-timeline-item>
-            계정생성
-          </el-timeline-item>
-          <el-timeline-item>
-            계정생성
-          </el-timeline-item>
-          <el-timeline-item>
-            계정생성
-          </el-timeline-item>
-          <el-timeline-item>
-            계정생성
-          </el-timeline-item>
-          <el-timeline-item>
-            계정생성
-          </el-timeline-item>
-          <el-timeline-item>
-            계정생성
-          </el-timeline-item>
-          <el-timeline-item>
-            계정생성
-          </el-timeline-item>
-          <el-timeline-item>
-            계정생성
-          </el-timeline-item>
-          <el-timeline-item>
-            계정생성
-          </el-timeline-item>
-          <el-timeline-item>
-            계정생성
-          </el-timeline-item>
-          <el-timeline-item>
-            계정생성
-          </el-timeline-item>
+          <el-timeline-item> 계정생성 </el-timeline-item>
+          <el-timeline-item> 계정생성 </el-timeline-item>
+          <el-timeline-item> 계정생성 </el-timeline-item>
+          <el-timeline-item> 계정생성 </el-timeline-item>
+          <el-timeline-item> 계정생성 </el-timeline-item>
+          <el-timeline-item> 계정생성 </el-timeline-item>
+          <el-timeline-item> 계정생성 </el-timeline-item>
+          <el-timeline-item> 계정생성 </el-timeline-item>
+          <el-timeline-item> 계정생성 </el-timeline-item>
+          <el-timeline-item> 계정생성 </el-timeline-item>
+          <el-timeline-item> 계정생성 </el-timeline-item>
+          <el-timeline-item> 계정생성 </el-timeline-item>
         </el-timeline>
       </div>
     </div>

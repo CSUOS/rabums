@@ -2,9 +2,7 @@
   <div class="background">
     <div class="register_container">
       <div class="line">
-        <h2>
-          RABUMS
-        </h2>
+        <h2>RABUMS</h2>
       </div>
       <div class="line">
         <el-radio v-model="type" :label="1" border>학생</el-radio>
@@ -12,7 +10,7 @@
       </div>
       <div class="line">
         <div class="title">
-          <p style="margin: 10px auto;">이름 :</p>
+          <p style="margin: 10px auto">이름 :</p>
         </div>
         <el-input
           v-model="user.userName"
@@ -22,7 +20,7 @@
       </div>
       <div class="line">
         <div class="title">
-          <p style="margin: 10px auto;">학번 :</p>
+          <p style="margin: 10px auto">학번 :</p>
         </div>
         <el-input
           v-model="user.userNumber"
@@ -40,7 +38,7 @@
       </div>
       <div class="line">
         <div class="title">
-          <p style="margin: 10px auto;">아이디 :</p>
+          <p style="margin: 10px auto">아이디 :</p>
         </div>
         <el-input
           v-model="user.userId"
@@ -50,13 +48,13 @@
       </div>
       <div class="line">
         <div class="title">
-          <p style="margin: 10px auto;">비밀번호 :</p>
+          <p style="margin: 10px auto">비밀번호 :</p>
         </div>
         <el-input v-model="user.userPw" show-password></el-input>
       </div>
       <div class="line">
         <div class="title">
-          <p style="margin: 10px auto;">비밀번호 확인 :</p>
+          <p style="margin: 10px auto">비밀번호 확인 :</p>
         </div>
         <el-input v-model="user.userPwCheck" show-password></el-input>
       </div>
@@ -72,21 +70,19 @@
       </div>
       <div class="line">
         <div class="title">
-          <p style="margin: 10px auto;">이메일주소 :</p>
+          <p style="margin: 10px auto">이메일주소 :</p>
         </div>
         <el-input v-model="user.userEmail" maxlength="30">
           <template slot="append">@uos.ac.kr</template>
         </el-input>
       </div>
       <div class="line">
-        <nuxt-link to="/" style="margin: 0 10px;">
-          <el-button type="info" plain>
-            취소
-          </el-button>
+        <nuxt-link to="/" style="margin: 0 10px">
+          <el-button type="info" plain> 취소 </el-button>
         </nuxt-link>
         <el-button
           v-loading.fullscreen.lock="onLoading"
-          style="margin: 0 10px;"
+          style="margin: 0 10px"
           type="primary"
           plain
           :disabled="!validation.consulusion"

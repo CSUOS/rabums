@@ -45,6 +45,15 @@ func GetClientInfo(clientID string) (*ClientInfo, error) {
 	return result, nil
 }
 
+//DeleteClientInfo client 삭제
+func DeleteClientInfo(client *ClientInfo) error {
+	db := GetDB()
+	if err := db.Delete(client).Error; err != nil {
+		return ErrDatabaseUnavailable
+	}
+	return nil
+}
+
 //UpdateClientInfo client 정보 갱신
 func UpdateClientInfo(clientInfo *ClientInfo) error {
 	db := GetDB()

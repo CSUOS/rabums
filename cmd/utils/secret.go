@@ -28,7 +28,13 @@ func GenerateNewToken() string {
 
 //CheckIsMasterkey 들어온 입력이 마스터키인지 확인한다.
 func CheckIsMasterkey(str string) bool {
-	return str == masterKey
+	if str == masterKey {
+		return true
+	}
+	if str == RabumsHASH(masterKey) {
+		return true
+	}
+	return false
 }
 
 //Obeject2JWT JWT 가져오는 함수

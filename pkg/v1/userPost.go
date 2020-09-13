@@ -3,8 +3,8 @@ package v1
 import (
 	"net/http"
 
-	"github.com/CSUOS/rabums/cmd/database"
-	"github.com/CSUOS/rabums/cmd/utils"
+	"github.com/CSUOS/rabums/pkg/database"
+	"github.com/CSUOS/rabums/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
 

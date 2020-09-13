@@ -3,7 +3,7 @@ package database
 import (
 	"time"
 
-	"github.com/CSUOS/rabums/cmd/utils"
+	"github.com/CSUOS/rabums/pkg/utils"
 	"github.com/jinzhu/gorm"
 
 	// mysql 플러그인

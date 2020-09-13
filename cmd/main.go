@@ -1,18 +1,41 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 
-	"github.com/CSUOS/rabums/cmd/database"
-	utils "github.com/CSUOS/rabums/cmd/utils"
-	v1 "github.com/CSUOS/rabums/cmd/v1"
+	"github.com/CSUOS/rabums/pkg/database"
+	utils "github.com/CSUOS/rabums/pkg/utils"
+	v1 "github.com/CSUOS/rabums/pkg/v1"
 )
 
 func main() {
 	utils.LoadSettings()
 	database.DBInit()
 	utils.GenerateSecret()
+
+	c := database.ClientInfo{}
+	if err := c.Get("rabums"); err != nil {
+		c = database.ClientInfo{
+			ClientID:    "rabums",
+			ClientPW:    "nil",
+			Link:        "https://rabums.csuos.ml",
+			Description: "Rabums에서 자동으로 생성한 기본 계정입니다.",
+			Valid:       true,
+			Token:       utils.GenerateNewToken(),
+		}
+		err = c.Create()
+		if err != nil {
+			panic("DB Problem")
+		}
+	}
+
+	u := database.UserInfo{}
+	u.Get("train96")
+	tmp, _ := u.GetLogs(0, 10)
+	fmt.Println(tmp)
 
 	router := gin.Default()
 

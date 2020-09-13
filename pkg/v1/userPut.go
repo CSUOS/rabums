@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/CSUOS/rabums/cmd/database"
-	"github.com/CSUOS/rabums/cmd/utils"
+	"github.com/CSUOS/rabums/pkg/database"
+	"github.com/CSUOS/rabums/pkg/utils"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
@@ -22,12 +22,13 @@ import (
 type RequestUserCreate struct {
 	Token string `json:"token" binding:"required"`
 }
+
 //ResponseUserCreate 유저생성완료 응답
 type ResponseUserCreate struct {
-	UserName string `json:"userName" binding:"required"`
+	UserName   string `json:"userName" binding:"required"`
 	UserNumber int32  `json:"userNumber" binding:"required"`
 	UserEmail  string `json:"userEmail" binding:"required"`
-	UserID     string `json:"userId" binding:"required"`	
+	UserID     string `json:"userId" binding:"required"`
 }
 
 //RequestUserToken /v1/user/request/token PUT 요청
@@ -39,11 +40,11 @@ type RequestUserToken struct {
 	UserID     string `json:"userId" binding:"required"`
 	UserPW     string `json:"userPw" binding:"required"`
 }
+
 //ResponseUserToken PUT 요청 응답
 type ResponseUserToken struct {
 	Ok bool `json:"ok" binding:"required"`
 }
-
 
 //UserReqTokenPut /v1/user/request/token PUT 요청
 //->RequestUserToken
@@ -175,15 +176,15 @@ func UserReqRegisterPut(c *gin.Context) {
 	}
 
 	database.RecordLog(user.ID, 0, database.CREATED, database.Message{
-		"userId": user.UserID,
+		"userId":     user.UserID,
 		"userNumber": user.UserNumber,
-		"userEmail": user.UserEmail,
+		"userEmail":  user.UserEmail,
 	})
 
 	c.JSON(http.StatusOK, ResponseUserCreate{
-		UserEmail: user.UserEmail,
-		UserID: user.UserID,
-		UserName: user.UserName,
+		UserEmail:  user.UserEmail,
+		UserID:     user.UserID,
+		UserName:   user.UserName,
 		UserNumber: user.UserNumber,
 	})
 }

@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/CSUOS/rabums/cmd/database"
+	"github.com/CSUOS/rabums/pkg/database"
 	"github.com/gin-gonic/gin"
 )
 

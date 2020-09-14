@@ -9,28 +9,13 @@ import (
 	"github.com/CSUOS/rabums/pkg/database"
 	utils "github.com/CSUOS/rabums/pkg/utils"
 	v1 "github.com/CSUOS/rabums/pkg/v1"
+	"github.com/CSUOS/rabums/pkg/v1frontend"
 )
 
 func main() {
 	utils.LoadSettings()
 	database.DBInit()
 	utils.GenerateSecret()
-
-	c := database.ClientInfo{}
-	if err := c.Get("rabums"); err != nil {
-		c = database.ClientInfo{
-			ClientID:    "rabums",
-			ClientPW:    "nil",
-			Link:        "https://rabums.csuos.ml",
-			Description: "Rabums에서 자동으로 생성한 기본 계정입니다.",
-			Valid:       true,
-			Token:       utils.GenerateNewToken(),
-		}
-		err = c.Create()
-		if err != nil {
-			panic("DB Problem")
-		}
-	}
 
 	u := database.UserInfo{}
 	u.Get("train96")
@@ -51,6 +36,14 @@ func main() {
 
 		version1.GET("/client", v1.ClientGet)
 		version1.PUT("/client", v1.ClientPut)
+	}
+
+	router.GET("/api/v1frontend/login", v1frontend.GetToken)
+	router.POST("/api/v1frontend/login", v1frontend.LoginHandler)
+	version1frontend := router.Group("api/v1frontend")
+	{
+		version1frontend.Use(v1frontend.AuthMiddleware)
+		version1frontend.GET("/logs", v1frontend.GetLogs)
 	}
 
 	router.Run(":8080")

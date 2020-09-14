@@ -22,7 +22,7 @@ func GenerateSecret() {
 
 //GenerateNewToken 임의의 토큰을 생성해서 반환한다.
 func GenerateNewToken() string {
-	t := fmt.Sprintf("%d", rand.Intn(1000000))
+	t := fmt.Sprintf("%d", rand.Int31())
 	return RabumsHASH(t)
 }
 

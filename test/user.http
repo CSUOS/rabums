@@ -1,3 +1,13 @@
+GET http://127.0.0.1:8080/api/v1frontend/logs
+###
+POST http://127.0.0.1:8080/api/v1frontend/login
+Content-Type: application/json
+
+{
+  "UserId": "train96",
+  "UserPw": "48cadd1112eb02f3a1062fdfbb9ed8173b11b3b5097721fa7023627fe0d4d357"
+}
+###
 POST http://127.0.0.1:8080/v1/get
 Content-Type: application/json
 

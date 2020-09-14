@@ -41,6 +41,22 @@ func DBInit() {
 	db.AutoMigrate(&ClientInfo{})
 	db.AutoMigrate(&UserInfo{})
 	db.AutoMigrate(&Log{})
+
+	c := ClientInfo{}
+	if err := c.Get("rabums"); err != nil {
+		c = ClientInfo{
+			ClientID:    "rabums",
+			ClientPW:    "nil",
+			Link:        "https://rabums.csuos.ml",
+			Description: "Rabums에서 자동으로 생성한 기본 계정입니다.",
+			Valid:       true,
+			Token:       utils.GenerateNewToken(),
+		}
+		err = c.Create()
+		if err != nil {
+			panic("DB Problem")
+		}
+	}
 }
 
 //Close DB 접속 끊기

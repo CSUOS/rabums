@@ -31,6 +31,12 @@ func GetToken(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"token": utils.RabumsHASH(rabums.Token)})
 }
 
+//LogoutHandler 로그아웃
+func LogoutHandler(c *gin.Context) {
+	c.SetCookie("auth", "", 3600, "/", "", false, false)
+	c.JSON(http.StatusOK, gin.H{"message": "Logged out"})
+}
+
 //LoginHandler POST Login
 func LoginHandler(c *gin.Context) {
 	var req requestLogin

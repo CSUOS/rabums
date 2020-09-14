@@ -38,8 +38,9 @@ func main() {
 		version1.PUT("/client", v1.ClientPut)
 	}
 
-	router.GET("/api/v1frontend/login", v1frontend.GetToken)
+	router.GET("/api/v1frontend/token", v1frontend.GetToken)
 	router.POST("/api/v1frontend/login", v1frontend.LoginHandler)
+	router.GET("/api/v1frontend/logout", v1frontend.LogoutHandler)
 	version1frontend := router.Group("api/v1frontend")
 	{
 		version1frontend.Use(v1frontend.AuthMiddleware)

@@ -40,13 +40,17 @@ type EventType int
 //사용자 종류
 const (
 	UNKOWN   EventType = -1
+	// 회원 관리
 	ACCESSED EventType = 100
 	CREATED  EventType = 101
 	UPDATED  EventType = 102
 	DELETED  EventType = 103
-	LOGIN    EventType = 200
-	LOGOUT   EventType = 201
 
+	// 로그인 로그아웃
+	LOGIN    EventType = 200
+	LOGOUT   EventType = 201 // 안씀
+
+	// 로그인 실패
 	INVALIDCLIENTPW   EventType = 401
 	INVALIDTOKEN      EventType = 402
 	USERNOTFOUND      EventType = 403

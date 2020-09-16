@@ -73,11 +73,17 @@ func LoginHandler(c *gin.Context) {
 		})
 		return
 	}
-	database.RecordLog(user.ID, rabums.ID, database.ACCESSED, nil)
+	database.RecordLog(user.ID, rabums.ID, database.LOGIN, nil)
 	s := utils.Obeject2JWT(jwt.MapClaims{
 		"userId": user.UserID,
 	})
 	c.SetCookie("auth", s, 3600, "/", "", false, false)
+	c.JSON(http.StatusOK, responseLogin{
+		UserName: user.UserName,
+		UserID: user.UserID,
+		UserEmail: user.UserEmail,
+		UserNumber: user.UserNumber,
+	})
 }
 
 //AuthMiddleware 인증되지 않은 요청은 401을 리턴

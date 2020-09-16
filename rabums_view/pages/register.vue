@@ -96,12 +96,8 @@
 </template>
 
 <script>
-const shajs = require('sha.js')
+const { RabumsHASH } = require('../libs/hash')
 
-const RabumsHASH = (text) => {
-  text = Buffer.from(text).toString('base64')
-  return shajs('sha256').update(text).digest('hex')
-}
 export default {
   data() {
     return {

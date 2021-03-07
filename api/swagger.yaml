@@ -1,0 +1,414 @@
+openapi: "3.0.2"
+info:
+  title: rabums
+  version: "0.1/alpha"
+servers:
+  - url: "{protocol}://{url}:{port}/api"
+    variables:
+      protocol:
+        enum:
+          - "http"
+          - "https"
+        default: http
+        description: your server protocol. https for production recommended
+      url:
+        default: 127.0.0.1
+        description: your server address
+      port:
+        default: "3000"
+        description: api server port. 3000 for dev.
+paths:
+  /v1/ping:
+    get:
+      tags:
+        - system
+      summary: ping check
+      operationId: PingPong
+      responses:
+        "200":
+          description: Server works fine
+        "500":
+          description: There's some problem
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+  /v1/user:
+    get:
+      summary: get user info
+      tags:
+        - user
+      operationId: GetUser
+      responses:
+        "200":
+          description: get user info suceessfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserInfo"
+        "401":
+          description: access denied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+    put:
+      summary: request for registration
+      tags:
+        - user
+      operationId: CreateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateUserRequest"
+      responses:
+        "200":
+          description: user created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserInfo"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+    post:
+      summary: update user info
+      tags:
+        - user
+      operationId: UpdateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserRequest"
+      responses:
+        "200":
+          description: user updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserInfo"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+  /v1/client/user:
+    post:
+      summary: get user info with client token
+      tags:
+        - client
+      operationId: GetUserInfoByClientToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userID
+                - userPWHashed
+                - token
+              properties:
+                userID:
+                  type: string
+                  description: userID to get user info
+                userPWHashed:
+                  type: string
+                  description: Hashed userPW to get user PW
+                token:
+                  type: string
+                  description: client token to auth
+      responses:
+        "200":
+          description: user updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserInfo"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+        "401":
+          description: Invalid user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+        "403":
+          description: Invalid token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+
+  /v1/client:
+    get:
+      summary: get client info
+      tags:
+        - client
+      operationId: GetClient
+      responses:
+        "200":
+          description: get client info suceessfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ClientInfo"
+        "401":
+          description: access denied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+    put:
+      summary: request for registration
+      tags:
+        - client
+      operationId: CreateClient
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateClientRequest"
+      responses:
+        "200":
+          description: client created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClientInfo"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+  /v1/client/{clientID}:
+    delete:
+      parameters:
+        - in: path
+          name: clientID
+          schema:
+            type: string
+          required: true
+      summary: "delete client"
+      tags:
+        - client
+      operationId: DeleteClient
+      responses:
+        "200":
+          description: "client deleted"
+        "404":
+          description: "client not found"
+  /v1/logs:
+    get:
+      summary: get login history for user
+      operationId: GetUserLogs
+      tags:
+        - web
+      responses:
+        "200":
+          description: Logs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Logs"
+        "401":
+          description: access denied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+  /v1/token:
+    post:
+      summary: request token for registration
+      tags:
+        - user
+      operationId: RequestToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestToken"
+      responses:
+        "200":
+          description: email being sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+        "400":
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+        "401":
+          description: invalid email
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+  /v1/login:
+    post:
+      summary: Logs in user
+      operationId: LoginUser
+      tags:
+        - web
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Logged in successfully
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: jupyAuth={JWT}; Path=/; HttpOnly
+        "400":
+          description: Invalid ID or PW
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Reason"
+  /v1/logout:
+    get:
+      summary: Log out user by clear cookie
+      operationId: LogoutUser
+      tags:
+        - web
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    Reason:
+      type: object
+      required:
+        - reason
+      properties:
+        reason:
+          type: string
+          example: "some message"
+    UserInfo:
+      type:  object
+      required:
+        - userID
+        - userName
+        - userNumber # 학번
+        - userEmail
+      properties:
+        id:
+          type: string
+          description: internal identification id
+        userID:
+          type: string
+          description: user id
+        userPW:
+          type: string
+          description: place holder for user pw
+        userNumber:
+          type: string
+          description: 학번
+        userName:
+          type: string
+          description: real world name of the user
+        userEmail:
+          type: string
+          description: user email
+    CreateUserRequest:
+      allOf:
+      - $ref: "#/components/schemas/UserInfo"
+      - type: object
+        required:
+          - userPW
+          - token
+        properties:
+          token:
+            type: string
+            description: token sent by email
+    UpdateUserRequest:
+      allOf:
+      - $ref: "#/components/schemas/UserInfo"
+      - type: object
+        required:
+          - previousPassword
+        properties:
+          previousPassword:
+            type: string
+            description: previous password
+    Logs:
+      type: array
+      items:
+        type: object
+        required:
+          - time
+          - event
+        properties:
+          time:
+            type: string
+            description: event time
+          event:
+            type: string
+            description: event type
+    RequestToken:
+      type: object
+      required:
+        - email
+        - userID
+      properties:
+        email:
+          type: string
+          description: email address to send token
+        userID:
+          type: string
+          description: userID to sign the token
+    LoginRequest:
+      type: object
+      required:
+        - userID
+        - userPW
+      properties:
+        userID:
+          type: string
+        userPW:
+          type: string
+    ClientInfo:
+      type: object
+      required:
+        - clientID
+        - clientName
+        - link
+        - description
+      properties:
+        clientID:
+          type: string
+          description: identification of client
+        clientName:
+          type: string
+          description: name of the client
+        link:
+          type: string
+        description:
+          type: string
+        token:
+          type: string
+        valid:
+          type: boolean
+    CreateClientRequest:
+      allOf:
+        - $ref: "#/components/schemas/ClientInfo"
+

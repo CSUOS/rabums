@@ -1,20 +1,15 @@
 module github.com/CSUOS/rabums
 
-go 1.14
+go 1.15
 
 require (
-	github.com/Netflix/go-env v0.0.0-20200512170851-5660fe1ab40a
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/gin-gonic/contrib v0.0.0-20200810162008-6dee08bf958e
-	github.com/gin-gonic/gin v1.6.3
-	github.com/go-playground/validator/v10 v10.3.0 // indirect
-	github.com/golang/protobuf v1.4.2 // indirect
-	github.com/hashicorp/vault/api v1.0.4
-	github.com/jinzhu/gorm v1.9.15
-	github.com/json-iterator/go v1.1.10 // indirect
-	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
-	github.com/modern-go/reflect2 v1.0.1 // indirect
-	golang.org/x/sys v0.0.0-20200803210538-64077c9b5642 // indirect
-	google.golang.org/protobuf v1.25.0 // indirect
-	gopkg.in/yaml.v2 v2.3.0 // indirect
+	entgo.io/ent v0.6.0
+	github.com/deepmap/oapi-codegen v1.5.1
+	github.com/getkin/kin-openapi v0.37.0
+	github.com/go-chi/chi v1.5.4
+	github.com/go-chi/jwtauth v1.2.0
+	github.com/go-chi/render v1.0.1
+	github.com/go-sql-driver/mysql v1.5.1-0.20200311113236-681ffa848bae
+	github.com/lestrrat-go/jwx v1.1.0
+	github.com/rs/zerolog v1.20.0
 )

@@ -111,15 +111,15 @@ paths:
               type: object
               required:
                 - userID
-                - userPWHashed
+                - userPW
                 - token
               properties:
                 userID:
                   type: string
                   description: userID to get user info
-                userPWHashed:
+                userPW:
                   type: string
-                  description: Hashed userPW to get user PW
+                  description: userPW to get user info
                 token:
                   type: string
                   description: client token to auth
@@ -151,13 +151,13 @@ paths:
 
   /v1/client:
     get:
-      summary: get client info
+      summary: get client list
       tags:
         - client
-      operationId: GetClient
+      operationId: GetClientList
       responses:
         "200":
-          description: get client info suceessfully
+          description: get client list suceessfully
           content:
             application/json:
               schema:
@@ -312,7 +312,7 @@ components:
         - userEmail
       properties:
         id:
-          type: string
+          type: integer
           description: internal identification id
         userID:
           type: string
@@ -321,7 +321,7 @@ components:
           type: string
           description: place holder for user pw
         userNumber:
-          type: string
+          type: integer
           description: 학번
         userName:
           type: string
@@ -389,13 +389,13 @@ components:
     ClientInfo:
       type: object
       required:
-        - clientID
         - clientName
         - link
         - description
+        - valid
       properties:
         clientID:
-          type: string
+          type: integer
           description: identification of client
         clientName:
           type: string

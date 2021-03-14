@@ -1,0 +1,53 @@
+ClientServer:
+	+-------------+-----------+--------+----------+----------+---------+---------------+-----------+------------------------------+------------+
+	|    Field    |   Type    | Unique | Optional | Nillable | Default | UpdateDefault | Immutable |          StructTag           | Validators |
+	+-------------+-----------+--------+----------+----------+---------+---------------+-----------+------------------------------+------------+
+	| id          | int       | false  | false    | false    | false   | false         | false     | json:"id,omitempty"          |          0 |
+	| client_name | string    | false  | false    | false    | false   | false         | false     | json:"client_name,omitempty" |          0 |
+	| token       | string    | false  | false    | false    | false   | false         | false     | json:"token,omitempty"       |          0 |
+	| link        | string    | false  | false    | false    | false   | false         | false     | json:"link,omitempty"        |          0 |
+	| description | string    | false  | false    | false    | false   | false         | false     | json:"description,omitempty" |          0 |
+	| available   | bool      | false  | false    | false    | false   | false         | false     | json:"available,omitempty"   |          0 |
+	| created_at  | time.Time | false  | false    | false    | true    | false         | false     | json:"created_at,omitempty"  |          0 |
+	+-------------+-----------+--------+----------+----------+---------+---------------+-----------+------------------------------+------------+
+	+--------+-------+---------+--------------+----------+--------+----------+
+	|  Edge  | Type  | Inverse |   BackRef    | Relation | Unique | Optional |
+	+--------+-------+---------+--------------+----------+--------+----------+
+	| events | Event | true    | clientserver | O2M      | false  | true     |
+	+--------+-------+---------+--------------+----------+--------+----------+
+	
+Event:
+	+------------+-----------+--------+----------+----------+---------+---------------+-----------+-----------------------------+------------+
+	|   Field    |   Type    | Unique | Optional | Nillable | Default | UpdateDefault | Immutable |          StructTag          | Validators |
+	+------------+-----------+--------+----------+----------+---------+---------------+-----------+-----------------------------+------------+
+	| id         | int       | false  | false    | false    | false   | false         | false     | json:"id,omitempty"         |          0 |
+	| event      | string    | false  | false    | false    | false   | false         | false     | json:"event,omitempty"      |          0 |
+	| message    | string    | false  | false    | false    | false   | false         | false     | json:"message,omitempty"    |          0 |
+	| created_at | time.Time | false  | false    | false    | true    | false         | false     | json:"created_at,omitempty" |          0 |
+	+------------+-----------+--------+----------+----------+---------+---------------+-----------+-----------------------------+------------+
+	+--------------+--------------+---------+---------+----------+--------+----------+
+	|     Edge     |     Type     | Inverse | BackRef | Relation | Unique | Optional |
+	+--------------+--------------+---------+---------+----------+--------+----------+
+	| user         | User         | false   |         | M2O      | true   | true     |
+	| clientserver | ClientServer | false   |         | M2O      | true   | true     |
+	+--------------+--------------+---------+---------+----------+--------+----------+
+	
+User:
+	+-------------+-----------+--------+----------+----------+---------+---------------+-----------+------------------------------+------------+
+	|    Field    |   Type    | Unique | Optional | Nillable | Default | UpdateDefault | Immutable |          StructTag           | Validators |
+	+-------------+-----------+--------+----------+----------+---------+---------------+-----------+------------------------------+------------+
+	| id          | int       | false  | false    | false    | false   | false         | false     | json:"id,omitempty"          |          0 |
+	| user_id     | string    | true   | false    | false    | false   | false         | false     | json:"user_id,omitempty"     |          0 |
+	| user_pw     | string    | false  | false    | false    | false   | false         | false     | json:"user_pw,omitempty"     |          0 |
+	| user_name   | string    | false  | false    | false    | false   | false         | false     | json:"user_name,omitempty"   |          0 |
+	| user_number | string    | false  | false    | false    | false   | false         | false     | json:"user_number,omitempty" |          0 |
+	| email       | string    | false  | false    | false    | false   | false         | false     | json:"email,omitempty"       |          0 |
+	| created_at  | time.Time | false  | false    | false    | true    | false         | false     | json:"created_at,omitempty"  |          0 |
+	| deleted_at  | time.Time | false  | true     | false    | false   | false         | false     | json:"deleted_at,omitempty"  |          0 |
+	+-------------+-----------+--------+----------+----------+---------+---------------+-----------+------------------------------+------------+
+	+--------+-------+---------+---------+----------+--------+----------+
+	|  Edge  | Type  | Inverse | BackRef | Relation | Unique | Optional |
+	+--------+-------+---------+---------+----------+--------+----------+
+	| events | Event | true    | user    | O2M      | false  | true     |
+	+--------+-------+---------+---------+----------+--------+----------+
+	
